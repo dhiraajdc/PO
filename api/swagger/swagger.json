@@ -1,0 +1,943 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Supply Chain Finance"
+  },
+  "host": "localhost:10010",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Purchase Order",
+      "description": "Everything about Purchase Order"
+    },
+    {
+      "name": "Demand Order",
+      "description": "Everything about Demand Order"
+    },
+    {
+      "name": "Organizations",
+      "description": "Everything about Organization"
+    },
+    {
+      "name": "Suppliers",
+      "description": "Everything about Suppliers"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/purchaseorder": {
+      "x-swagger-router-controller": "PurchaseOrder",
+      "get": {
+        "tags": [
+          "Purchase Order"
+        ],
+        "description": "Returns all purchase order details",
+        "operationId": "getAllPurchaseOrder",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort by query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PurchaseOrder"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Purchase Order"
+        ],
+        "description": "Returns all purchase order details",
+        "operationId": "deletePurchaseOrder",
+        "parameters": [
+          {
+            "name": "poNumber",
+            "description": "Purchase order Number",
+            "type": "integer",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Purchase Order"
+        ],
+        "description": "add a new purchase order detail",
+        "operationId": "createPurchaseOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "order placed for purchasing the product",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PurchaseOrder"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Purchase Order"
+        ],
+        "description": "update purchase order details",
+        "operationId": "updatePurchaseOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "update purchase order details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdatePurchaseOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/demandorder": {
+      "x-swagger-router-controller": "DemandOrder",
+      "get": {
+        "tags": [
+          "Demand Order"
+        ],
+        "description": "Returns demand order details",
+        "operationId": "getAllDemandOrder",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort by query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DemandOrder"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Demand Order"
+        ],
+        "description": "Delete demand order details",
+        "operationId": "deleteDemandOrder",
+        "parameters": [
+          {
+            "name": "doNumber",
+            "description": "Purchase order Number",
+            "type": "integer",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Demand Order"
+        ],
+        "description": "add new demand order detail",
+        "operationId": "createDemandOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Demand Order details",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DemandOrder"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Demand Order"
+        ],
+        "description": "update demand order details",
+        "operationId": "updateDemandOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "update demand order details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateDemandOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/org": {
+      "x-swagger-router-controller": "Organization",
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Returns Organization details",
+        "operationId": "getAllOrganization",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort by query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/organization"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Delete organization details",
+        "operationId": "deleteOrganization",
+        "parameters": [
+          {
+            "name": "orgId",
+            "description": "Organization Number",
+            "type": "integer",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Organizations"
+        ],
+        "description": "add new Organization details",
+        "operationId": "createOrganization",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Organization details",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/organization"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Organizations"
+        ],
+        "description": "update Organization details",
+        "operationId": "updateOrganization",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "update demand order details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateOrganization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/supplier": {
+      "x-swagger-router-controller": "Supplier",
+      "get": {
+        "tags": [
+          "Suppliers"
+        ],
+        "description": "Returns Supplier details",
+        "operationId": "getSuppliers",
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "sort by query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/supplier"
+              }
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Suppliers"
+        ],
+        "description": "Delete Supplier details",
+        "operationId": "deleteSuppliers",
+        "parameters": [
+          {
+            "name": "supplierID",
+            "description": "Purchase order Number",
+            "type": "integer",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Suppliers"
+        ],
+        "description": "add new Supplier details",
+        "operationId": "createSuppliers",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Organization details",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/supplier"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Suppliers"
+        ],
+        "description": "update Supplier details",
+        "operationId": "updateSuppliers",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "update demand order details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateSupplier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "definitions": {
+    "UpdateSupplier": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/supplierCondition"
+        },
+        "update": {
+          "$ref": "#/definitions/supplier"
+        }
+      },
+      "xml": {
+        "name": "UpdateSupplier"
+      }
+    },
+    "supplierCondition": {
+      "type": "object",
+      "required": [
+        "supplierID"
+      ],
+      "properties": {
+        "supplierID": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "supplierCondition"
+      }
+    },
+    "UpdateOrganization": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/orgCondition"
+        },
+        "update": {
+          "$ref": "#/definitions/organization"
+        }
+      },
+      "xml": {
+        "name": "UpdateOrganization"
+      }
+    },
+    "orgCondition": {
+      "type": "object",
+      "required": [
+        "orgId"
+      ],
+      "properties": {
+        "orgId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "orgCondition"
+      }
+    },
+    "UpdateDemandOrder": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/doCondition"
+        },
+        "update": {
+          "$ref": "#/definitions/DemandOrder"
+        }
+      },
+      "xml": {
+        "name": "UpdateDemandOrder"
+      }
+    },
+    "doCondition": {
+      "type": "object",
+      "required": [
+        "doNumber"
+      ],
+      "properties": {
+        "doNumber": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "doCondition"
+      }
+    },
+    "UpdatePurchaseOrder": {
+      "type": "object",
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/poCondition"
+        },
+        "update": {
+          "$ref": "#/definitions/PurchaseOrder"
+        }
+      },
+      "xml": {
+        "name": "UpdatePurchaseOrder"
+      }
+    },
+    "poCondition": {
+      "type": "object",
+      "required": [
+        "poNumber"
+      ],
+      "properties": {
+        "poNumber": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "poCondition"
+      }
+    },
+    "PurchaseOrder": {
+      "type": "object",
+      "properties": {
+        "manufacturerName": {
+          "type": "string"
+        },
+        "orderid": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "poNumber": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issueDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "supplierName": {
+          "type": "string"
+        },
+        "supplierAddrs": {
+          "type": "string"
+        },
+        "delivryAddrs": {
+          "type": "string",
+          "description": "Organisation ID"
+        },
+        "billingAddrs": {
+          "type": "string"
+        },
+        "product": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "qty": {
+          "type": "integer"
+        },
+        "unitPrice": {
+          "type": "integer"
+        },
+        "totalPrice": {
+          "type": "integer"
+        },
+        "taxCode": {
+          "type": "string"
+        },
+        "grndTotal": {
+          "type": "integer"
+        },
+        "advPaymnt": {
+          "type": "integer"
+        },
+        "netPayable": {
+          "type": "integer"
+        },
+        "amtInWords": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "description": "Order Status",
+          "enum": [
+            "approved",
+            "rejected"
+          ]
+        }
+      },
+      "example": {
+        "manufacturerName": "manufacturerName",
+        "supplierName": "supplierName",
+        "unitPrice": 5,
+        "supplierAddrs": "supplierAddrs",
+        "product": "product",
+        "netPayable": 9,
+        "orderid": 0,
+        "amtInWords": "amtInWords",
+        "advPaymnt": 7,
+        "description": "description",
+        "taxCode": "taxCode",
+        "unit": "unit",
+        "qty": 1,
+        "grndTotal": 2,
+        "delivryAddrs": "delivryAddrs",
+        "totalPrice": 5,
+        "issueDate": "2000-01-23T04:56:07.000+00:00",
+        "poNumber": 6,
+        "createDate": "2000-01-23T04:56:07.000+00:00",
+        "billingAddrs": "billingAddrs",
+        "status": "approved"
+      },
+      "xml": {
+        "name": "PurchaseOrder"
+      }
+    },
+    "DemandOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "manufacturerName": {
+          "type": "string"
+        },
+        "doNumber": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issueDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "distributorName": {
+          "type": "string"
+        },
+        "addressOfDistributor": {
+          "type": "string"
+        },
+        "deliveryAddress": {
+          "type": "string"
+        },
+        "billingAddress": {
+          "type": "string"
+        },
+        "product": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "totalPrice": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "grandTotal": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "advancePayment": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "example": {
+        "product": "product",
+        "quantity": 2,
+        "totalPrice": 1,
+        "grandTotal": 5,
+        "description": "description",
+        "manufacturerName": "nameOfmanufacturer",
+        "doNumber": 6,
+        "unit": "unit",
+        "deliveryAddress": "deliveryAddress",
+        "advancePayment": 5,
+        "addressOfDistributor": "addressOfDistributor",
+        "id": 0,
+        "billingAddress": "billingAddress",
+        "issueDate": "2000-01-23T04:56:07.000+00:00",
+        "createDate": "2000-01-23T04:56:07.000+00:00",
+        "distributorName": "nameOfDistributor"
+      },
+      "xml": {
+        "name": "DemandOrder"
+      }
+    },
+    "organization": {
+      "type": "object",
+      "properties": {
+        "orgName": {
+          "type": "string",
+          "description": "organization name"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int64",
+          "description": "organization id"
+        }
+      },
+      "xml": {
+        "name": "organization"
+      }
+    },
+    "supplier": {
+      "type": "object",
+      "properties": {
+        "supplierID": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "supplierName": {
+          "type": "string"
+        },
+        "supplierAddrs": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "supplier"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "code": 0,
+        "type": "type",
+        "message": "message"
+      }
+    },
+    "ErrorResponse": {
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
