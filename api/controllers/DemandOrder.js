@@ -6,17 +6,17 @@ var express = require('express');
 var router = express.Router();
 
 
-router.get('/', getAllDemandOrder);
-router.get('/search/:searchBy', searchDemandOrder);
-router.get('/:manufacturerName/:sortBy', getDemandOrder);
-router.delete('/:doNumber', deleteDemandOrder);
-router.post('/', createDemandOrder);
-router.put('/', updateDemandOrder);
-router.patch('/', updateSingleDemandOrder);
+// router.get('/', getAllDemandOrder);
+// router.get('/search/:searchBy', searchDemandOrder);
+// router.get('/:manufacturerName/:sortBy', getDemandOrder);
+// router.delete('/:doNumber', deleteDemandOrder);
+// router.post('/', createDemandOrder);
+// router.put('/', updateDemandOrder);
+// router.patch('/', updateSingleDemandOrder);
 // module.exports = router;
 
 module.exports ={
-  getAllDemandOrder: getAllDemandOrder,
+  getDemandOrder: getDemandOrder,
   createDemandOrder: createDemandOrder,
   updateDemandOrder: updateDemandOrder,
   deleteDemandOrder: deleteDemandOrder
@@ -61,9 +61,26 @@ function createDemandOrder (req, res, next) {
 * @description:get All Demand order
 */
 
-function getAllDemandOrder (req, res, next) {
-  // var manufacturerName = req.params.manufacturerName;
-  DemandOrder.getAllDemandOrder()
+function getDemandOrder (req, res, next) {
+  var doNumber = req.swagger.params.doNumber.value;
+  var sort = req.swagger.params.sortBy.value || "doNumber_";
+  var searchBy = req.swagger.params.searchBy.value
+  if(sort){
+    var sortBy = sort.split("_")[0];
+    var value = sort.split("_")[1];
+    if (value === "asc")
+    {
+      var sortValue = 1;
+    }else if (value === "desc"){
+      var sortValue = -1;
+    }else{
+      var error = {
+        message:'Bad request'
+      }
+      res.json(error);
+    }
+  }
+  DemandOrder.getDemandOrder(doNumber,sortBy,sortValue,searchBy)
     .then(function (response) {
       console.log(response);
       res.json(response);
@@ -79,17 +96,17 @@ function getAllDemandOrder (req, res, next) {
 * @description:get Demand order
 */
 
-function getDemandOrder (req, res, next) {
-  // var manufacturerName = req.params.manufacturerName;
-  // var sortBy = req.params.sortBy;
-  DemandOrder.getDemandOrder(manufacturerName,sortBy)
-    .then(function (response) {
-      res.json(response);
-    })
-    .catch(function (response) {
-      res.json(response);
-    });
-};
+// function getDemandOrder (req, res, next) {
+//   // var manufacturerName = req.params.manufacturerName;
+//   // var sortBy = req.params.sortBy;
+//   DemandOrder.getDemandOrder(manufacturerName,sortBy)
+//     .then(function (response) {
+//       res.json(response);
+//     })
+//     .catch(function (response) {
+//       res.json(response);
+//     });
+// };
 
 /** 
 * @author:Gokul

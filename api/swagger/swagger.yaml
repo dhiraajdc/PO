@@ -139,20 +139,20 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /demandorder/{doNumber}:
+  /demandorder:
     x-swagger-router-controller: DemandOrder
     get:
       tags:
         - Demand Order
       description: Returns demand order details
       # used as the method name of the controller
-      operationId: getAllDemandOrder
+      operationId: getDemandOrder
       parameters:
         - name: doNumber
           description: Demand order Number
           type: integer
-          in: path
-          required: true
+          in: query
+          required: false
         - name: sortBy
           in: query
           description: sort by query
@@ -191,7 +191,7 @@ paths:
         - name: doNumber
           description: Demand order Number
           type: integer
-          in: path
+          in: query
           required: true
       responses:
         "200":
@@ -203,8 +203,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /demandorder:            
-    x-swagger-router-controller: DemandOrder
     post:
       tags:
         - Demand Order
@@ -252,19 +250,34 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /org/{orgId}:
+  /org:
     x-swagger-router-controller: Organization
     get:
       tags:
         - Organizations
       description: Returns Organization details
       # used as the method name of the controller
-      operationId: getAllOrganization
+      operationId: getOrganization
       parameters:
         - name: orgId
-          in: path
+          in: query
           description: Organization ID
-          required: true
+          required: false
+          type: integer
+        - name: sortBy
+          in: query
+          description: sort by query
+          required: false
+          type: string
+        - name: searchBy
+          in: query
+          description: search by query
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: pagination query
+          required: false
           type: integer
       responses:
         "200":
@@ -287,7 +300,7 @@ paths:
       operationId: deleteOrganization
       parameters:
         - name: orgId
-          in: path
+          in: query
           description: Organization ID
           required: true
           type: integer
@@ -301,8 +314,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /org:
-    x-swagger-router-controller: Organization            
     post:
       tags:
         - Organizations
@@ -350,7 +361,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /supplier/{supplierID}:
+  /supplier:
     x-swagger-router-controller: Supplier
     get:
       tags:
@@ -362,8 +373,23 @@ paths:
         - name: supplierID
           description: Purchase order Number
           type: integer
-          in: path
-          required: true
+          in: query
+          required: false
+        - name: sortBy
+          in: query
+          description: sort by query
+          required: false
+          type: string
+        - name: searchBy
+          in: query
+          description: search by query
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: pagination query
+          required: false
+          type: integer
       responses:
         "200":
           description: Success
@@ -387,7 +413,7 @@ paths:
         - name: supplierID
           description: Purchase order Number
           type: integer
-          in: path
+          in: query
           required: true
       responses:
         "200":
@@ -399,8 +425,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /supplier:
-    x-swagger-router-controller: Supplier            
     post:
       tags:
         - Suppliers

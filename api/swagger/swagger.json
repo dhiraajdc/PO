@@ -42,14 +42,35 @@
           "Purchase Order"
         ],
         "description": "Returns all purchase order details",
-        "operationId": "getAllPurchaseOrder",
+        "operationId": "getPurchaseOrder",
         "parameters": [
           {
-            "name": "sort",
+            "name": "poNumber",
+            "description": "Purchase order Number",
+            "type": "integer",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "sortBy",
             "in": "query",
             "description": "sort by query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "searchBy",
+            "in": "query",
+            "description": "search by query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pagination query",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -175,14 +196,35 @@
           "Demand Order"
         ],
         "description": "Returns demand order details",
-        "operationId": "getAllDemandOrder",
+        "operationId": "getDemandOrder",
         "parameters": [
           {
-            "name": "sort",
+            "name": "doNumber",
+            "description": "Demand order Number",
+            "type": "integer",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "sortBy",
             "in": "query",
             "description": "sort by query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "searchBy",
+            "in": "query",
+            "description": "search by query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pagination query",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -212,7 +254,7 @@
         "parameters": [
           {
             "name": "doNumber",
-            "description": "Purchase order Number",
+            "description": "Demand order Number",
             "type": "integer",
             "in": "query",
             "required": true
@@ -308,14 +350,35 @@
           "Organizations"
         ],
         "description": "Returns Organization details",
-        "operationId": "getAllOrganization",
+        "operationId": "getOrganization",
         "parameters": [
           {
-            "name": "sort",
+            "name": "orgId",
+            "in": "query",
+            "description": "Organization ID",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "sortBy",
             "in": "query",
             "description": "sort by query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "searchBy",
+            "in": "query",
+            "description": "search by query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pagination query",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -345,10 +408,10 @@
         "parameters": [
           {
             "name": "orgId",
-            "description": "Organization Number",
-            "type": "integer",
             "in": "query",
-            "required": true
+            "description": "Organization ID",
+            "required": true,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -444,11 +507,32 @@
         "operationId": "getSuppliers",
         "parameters": [
           {
-            "name": "sort",
+            "name": "supplierID",
+            "description": "Purchase order Number",
+            "type": "integer",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "sortBy",
             "in": "query",
             "description": "sort by query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "searchBy",
+            "in": "query",
+            "description": "search by query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "pagination query",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {

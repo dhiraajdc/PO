@@ -13,21 +13,35 @@ var Q = require ('q');
  * 
  **/
 
-exports.getAllOrganization = function() {
+exports.getOrganization = function(orgId,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
+  if(orgId && orgId.length){
+    condition["orgId"] = orgId;
+  }
+  if(searchBy){
+    condition["orgName"] = searchBy;
+  }
   var paramNotReq = {_id:0};
+  var sortField = {};
+  var sortBy = sortBy || "orgId";
+  sortField[sortBy] = sortValue || 1;
   // console.log(condition);
   //  Read (Read data from MongoDB)
   crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
+    console.log(data);
         if (err) {
           console.error(err);
           deferred.reject(err);
         }
-        if (!data.length){
+        if (data.length){
+        }
+        else{
           var error = {
-            response:'No Record Found'
+            message:'No Record Found'
           }
+          console.log(error)
+          res.status(404).send('No good!');
           deferred.reject(error);
         }
         deferred.resolve(data);
@@ -44,11 +58,13 @@ exports.getAllOrganization = function() {
  **/
 exports.deleteOrganization = function(organizationId) {
   var deferred = Q.defer();
+  var paramNotReq = {_id:0};
   var condition = {};
   condition["orgId"] = parseInt(organizationId);
+  var paramNotReq = {_id:0};
   // return new Promise(function(resolve, reject) {
     if(organizationId){
-      crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, function (err, data) {
+      crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
         // console.log(data);
         if (err) {
           deferred.reject(err);
@@ -69,7 +85,6 @@ exports.deleteOrganization = function(organizationId) {
           var error = {
             message:'No Record Found'
           }
-          console.log(error)
           deferred.reject(error);
         }
         
@@ -85,32 +100,6 @@ exports.deleteOrganization = function(organizationId) {
 }
 
 
-/**
- * Get organization  details by organizationId
- * 
- *
- * organizationId Integer Fetch organization data by organizationId 
- * returns organization
- **/
-exports.getOrganization = function(organizationId,sortBy) {
-  var deferred = Q.defer();
-  var condition = {};
-  condition["orgId"] = parseInt(organizationId);
-  var sortField = {};
-  var sortBy = sortBy || "orgName";
-  sortField[sortBy] = 1;
-  console.log('condition ===>',condition);
-  //  Create (Store data in MongoDB)
-  crud.sort(db.dbConnection, db.dbName, collectionName, condition, sortField, function (err, data) {
-        if (err) {
-          console.error(err);
-          deferred.reject(err);
-        }
-        deferred.resolve(data);
-  });
-  return deferred.promise;
-}
-
 
 /**
  * Place an order for a product
@@ -121,16 +110,41 @@ exports.getOrganization = function(organizationId,sortBy) {
  **/
 exports.createOrganization = function(body) {
   var deferred = Q.defer();
-  var data = body;
-  console.log('data ===>',data);
-  //  Create (Store data in MongoDB)
-  crud.create(db.dbConnection, db.dbName, collectionName, data, function (err, data) {
-        if (err) {
-          console.error(err);
-          deferred.reject(err);
-        }
-        deferred.resolve(data);
+  // var data = body;
+  var paramNotReq = {_id:0};
+  var condition = {};
+  condition["supplierName"] = body.supplierName;
+  condition["supplierID"] = parseInt(body.supplierID);
+  // console.log(condition);
+  crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
+    if(data == undefined){
+      // console.log(data);
+      var error = {
+        response:'Database Connection Error'
+      }
+      deferred.reject(error);
+    }
+    if (err) {
+      deferred.reject(err);
+    }
+
+    if(data.length){
+      var error = {
+        response:'Supplier ID ' + body.supplierID + ' already exists'
+      }
+      deferred.reject(error);
+    }
+    else{
+      crud.create(db.dbConnection, db.dbName, collectionName, data, function (err, data) {
+            if (err) {
+              console.error(err);
+              deferred.reject(err);
+            }
+            deferred.resolve(data);
+      });
+    }
   });
+  
   return deferred.promise;
 }
 

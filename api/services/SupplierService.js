@@ -13,19 +13,29 @@ var Q = require ('q');
  * organizationId Integer Fetch supplier data by organizationId 
  * returns organization
  **/
-exports.getSuppliers = function() {
+exports.getSuppliers = function(supplierID,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
+  if(supplierID && supplierID.length){
+    condition["supplierID"] = supplierID;
+  }
+  if(searchBy){
+    condition["supplierName"] = searchBy;
+  }
   var paramNotReq = {_id:0};
+  var sortField = {};
+  var sortBy = sortBy || "supplierID";
+  sortField[sortBy] = sortValue || 1;
   //  Read (Read data from MongoDB)
   crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
+    console.log(data)
         if (err) {
           console.error(err);
           deferred.reject(err);
         }
         if (!data.length){
           var error = {
-            response:'No record found'
+            message:'No record found'
           }
           deferred.reject(error);
         }
@@ -73,11 +83,12 @@ exports.updateSuppliers = function(body) {
  **/
 exports.deleteSuppliers = function(supplierID) {
   var deferred = Q.defer();
+  var paramNotReq = {_id:0};
   var condition = {};
   condition["supplierID"] = parseInt(supplierID);
   //  Delete (Delete data from MongoDB)
   if(supplierID){
-    crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, function (err, data) {
+    crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq,function (err, data) {
       // console.log(data);
       if (err) {
         deferred.reject(err);

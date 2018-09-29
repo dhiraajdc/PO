@@ -14,11 +14,12 @@ var Q = require ('q');
  **/
 exports.deleteDemandOrder = function(doNumber) {
   var deferred = Q.defer();
+  var paramNotReq = {_id:0};
   var condition = {};
   condition["doNumber"] = parseInt(doNumber);
   // return new Promise(function(resolve, reject) {
     if(doNumber){
-      crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, function (err, data) {
+      crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
         // console.log(data);
         if (err) {
           deferred.reject(err);
@@ -65,13 +66,14 @@ exports.deleteDemandOrder = function(doNumber) {
 exports.createDemandOrder = function(body) {
   var deferred = Q.defer();
   // var data = body;
+  var paramNotReq = {_id:0};
   var condition = {};
   condition["manufacturerName"] = body.manufacturerName;
   condition["doNumber"] = parseInt(body.doNumber);
   // console.log(condition);
-  crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, function (err, data) {
+  crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
     if(data == undefined){
-      console.log(data);
+      // console.log(data);
       var error = {
         response:'Database Connection Error'
       }
@@ -102,49 +104,25 @@ exports.createDemandOrder = function(body) {
   return deferred.promise;
 }
 
-
-/**
- * Get demand order by demand number
- * 
- *
- * doNumber Integer Fetch demand order by demand number
- * returns DemandOrder
- **/
-exports.getDemandOrder = function(manufacturerName,sortBy) {
-  var deferred = Q.defer();
-  var condition = {};
-  condition["manufacturerName"] = manufacturerName;
-  var sortField = {};
-  var sortBy = sortBy || "doNumber";
-  sortField[sortBy] = 1;
-  // console.log('condition ===>',condition);
-  //  Create (Store data in MongoDB)
-  crud.sort(db.dbConnection, db.dbName, collectionName, condition, sortField, function (err, data) {
-        if (err) {
-          console.error(err);
-          deferred.reject(err);
-        }
-        if (!data.length){
-          var error = {
-            response:'Record not found'
-          }
-          deferred.reject(error);
-        }
-        deferred.resolve(data);
-  });
-  return deferred.promise;
-}
-
 /**
  * Get all demand order
  * 
  * returns DemandOrder
  **/
 
-exports.getAllDemandOrder = function() {
+exports.getDemandOrder = function(doNumber,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
+  if(doNumber && doNumber.length){
+    condition["doNumber"] = doNumber;
+  }
+  if(searchBy){
+    condition["manufacturerName"] = searchBy;
+  }
   var paramNotReq = {_id:0};
+  var sortField = {};
+  var sortBy = sortBy || "doNumber";
+  sortField[sortBy] = sortValue || 1;
   //  Create (Store data in MongoDB)
   crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
         
@@ -156,7 +134,7 @@ exports.getAllDemandOrder = function() {
           var error = {
             message:'Record not found'
           }
-          deferred.reject(error);
+          deferred.resolve(error);
         }
         deferred.resolve(data);
   });

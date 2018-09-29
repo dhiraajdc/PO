@@ -37,23 +37,29 @@ module.exports = {
 function getPurchaseOrder (req, res, next) {
   var poNumber = req.swagger.params.poNumber.value;
   var sort = req.swagger.params.sortBy.value || "poNumber_asc";
+  var searchBy = req.swagger.params.searchBy.value
   if(sort){
-    var sortBy = sort.split("_",1);
-    var value = sort.split("_",2);
-    if (value == "asc")
+    var sortBy = sort.split("_")[0];
+    var value = sort.split("_")[1];
+    if (value === "asc")
     {
       var sortValue = 1;
-    }else{
+    }else if (value === "desc"){
       var sortValue = -1;
+    }else{
+      var error = {
+        message:'Bad request'
+      }
+      res.json(error);
     }
   }
-  PurchaseOrder.getPurchaseOrder(poNumber,sortBy,sortValue)
+  PurchaseOrder.getPurchaseOrder(poNumber,sortBy,sortValue,searchBy)
     .then(function (response) {
-      console.log(response);
+      // console.log(response);
       res.json(response);
     })
     .catch(function (response) {
-      console.log(response);
+      // console.log(response);
       res.json(response);
     });
 };

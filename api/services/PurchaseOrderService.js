@@ -15,11 +15,12 @@ var Q = require ('q');
  **/
 exports.deletePurchaseOrder = function(poNumber) {
   var deferred = Q.defer();
+  var paramNotReq = {_id:0};
   var condition = {};
   condition["poNumber"] = parseInt(poNumber);
   //  Delete (Delete data from MongoDB)
   if(poNumber){
-    crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, function (err, data) {
+    crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
       // console.log(data);
       if (err) {
         deferred.reject(err);
@@ -63,20 +64,24 @@ exports.deletePurchaseOrder = function(poNumber) {
  * 
  **/
 
-exports.getPurchaseOrder = function(poNumber,sortBy,sortValue) {
+exports.getPurchaseOrder = function(poNumber,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
-  if(poNumber){
+  var po = poNumber || {}
+  if(poNumber && poNumber.length){
     condition["poNumber"] = poNumber;
+    console.log(condition);
+  }
+  if(searchBy){
+    condition["manufacturerName"] = searchBy;
   }
   var paramNotReq = {_id:0};
   var sortField = {};
   var sortBy = sortBy || "poNumber";
   sortField[sortBy] = sortValue || 1;
-  console.log(condition);
+  // console.log(condition);
   //  Read (Read data from MongoDB)
   crud.sort(db.dbConnection, db.dbName, collectionName, condition, sortField, paramNotReq, function (err, data) {
-    // console.log(data);
         if (err) {
           console.error(err);
           deferred.reject(err);
@@ -136,11 +141,12 @@ exports.getPurchaseOrder = function(poNumber,sortBy,sortValue) {
 exports.createPurchaseOrder = function(body) {
   var deferred = Q.defer();
   // var data = body;
+  var paramNotReq = {_id:0};
   var condition = {};
   condition["orderid"] = body.orderid;
   condition["poNumber"] = parseInt(body.poNumber);
   // console.log(condition);
-  crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, function (err, data) {
+  crud.readByCondition(db.dbConnection, db.dbName, collectionName, condition, paramNotReq, function (err, data) {
     if (err) {
       deferred.reject(err);
     }
