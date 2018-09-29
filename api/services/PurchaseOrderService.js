@@ -39,7 +39,7 @@ exports.deletePurchaseOrder = function(poNumber) {
       }
       else{
         var error = [{
-          status : '404',
+           
           message:'No Record Found'
         }]
         console.log(error)
@@ -80,13 +80,14 @@ exports.getPurchaseOrder = function(poNumber,sortBy,sortValue,searchBy) {
   sortField[sortBy] = sortValue || 1;
   //  Read (Read data from MongoDB)
   crud.sort(db.dbConnection, db.dbName, collectionName, condition, sortField, paramNotReq, function (err, data) {
+    console.log("data==>", data)
         if (err) {
           console.error(err);
           deferred.reject(err);
         }
         if (!data.length){
           var error = [{
-            status : '404',
+            status: '404',
             message:'No Record Found'
           }]
           deferred.reject(error);

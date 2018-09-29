@@ -132,7 +132,7 @@ exports.getDemandOrder = function(doNumber,sortBy,sortValue,searchBy) {
         }
         if (!data.length){
           var error = [{
-            message:'Record not found'
+            message:'No Record Found'
           }]
           deferred.resolve(error);
         }

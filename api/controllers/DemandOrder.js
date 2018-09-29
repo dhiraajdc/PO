@@ -63,7 +63,7 @@ function createDemandOrder (req, res, next) {
 
 function getDemandOrder (req, res, next) {
   var doNumber = req.swagger.params.doNumber.value;
-  var sort = req.swagger.params.sortBy.value || "doNumber_";
+  var sort = req.swagger.params.sortBy.value || "doNumber_asc";
   var searchBy = req.swagger.params.searchBy.value
   if(sort){
     var sortBy = sort.split("_")[0];

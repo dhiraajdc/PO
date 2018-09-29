@@ -43,7 +43,7 @@ function deleteSuppliers (req, res, next) {
 };
 
 function getSuppliers (req, res, next) {
-  var supplierID = req.swagger.params.orgId.value;
+  var supplierID = req.swagger.params.supplierID.value;
   var sort = req.swagger.params.sortBy.value || "orgId_asc";
   var searchBy = req.swagger.params.searchBy.value
   if(sort){

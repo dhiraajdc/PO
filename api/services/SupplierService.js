@@ -16,7 +16,7 @@ var Q = require ('q');
 exports.getSuppliers = function(supplierID,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
-  if(supplierID && supplierID.length){
+  if(supplierID){
     condition["supplierID"] = supplierID;
   }
   if(searchBy){
@@ -35,7 +35,7 @@ exports.getSuppliers = function(supplierID,sortBy,sortValue,searchBy) {
         }
         if (!data.length){
           var error = [{
-            status : '404',
+            status: '404',
             message:'No Record Found'
           }]
           deferred.reject(error);
@@ -108,7 +108,7 @@ exports.deleteSuppliers = function(supplierID) {
       }
       else{
         var error = [{
-          status : '404',
+           
           message:'No Record Found'
         }]
         console.log(error)

@@ -38,7 +38,7 @@ exports.getOrganization = function(orgId,sortBy,sortValue,searchBy) {
         }
         else{
           var error = [{
-            status : '404',
+            status: '404',
             message:'No Record Found'
           }]
           console.log(error)
@@ -83,7 +83,7 @@ exports.deleteOrganization = function(organizationId) {
         }
         else{
           var error = [{
-            status : '404',
+            status: '404',
             message:'No Record Found'
           }]
           deferred.reject(error);
