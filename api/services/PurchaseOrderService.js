@@ -38,9 +38,10 @@ exports.deletePurchaseOrder = function(poNumber) {
         });
       }
       else{
-        var error = {
+        var error = [{
+          status : '404',
           message:'No Record Found'
-        }
+        }]
         console.log(error)
         deferred.reject(error);
       }
@@ -48,9 +49,9 @@ exports.deletePurchaseOrder = function(poNumber) {
     });
   }
   else{
-    var error = {
+    var error = [{
       message:'PO number is invalid'
-    }
+    }]
     deferred.reject(error);
   }
   return deferred.promise;
@@ -67,10 +68,8 @@ exports.deletePurchaseOrder = function(poNumber) {
 exports.getPurchaseOrder = function(poNumber,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
-  var po = poNumber || {}
-  if(poNumber && poNumber.length){
+  if(poNumber){
     condition["poNumber"] = poNumber;
-    console.log(condition);
   }
   if(searchBy){
     condition["manufacturerName"] = searchBy;
@@ -79,7 +78,6 @@ exports.getPurchaseOrder = function(poNumber,sortBy,sortValue,searchBy) {
   var sortField = {};
   var sortBy = sortBy || "poNumber";
   sortField[sortBy] = sortValue || 1;
-  // console.log(condition);
   //  Read (Read data from MongoDB)
   crud.sort(db.dbConnection, db.dbName, collectionName, condition, sortField, paramNotReq, function (err, data) {
         if (err) {
@@ -87,9 +85,10 @@ exports.getPurchaseOrder = function(poNumber,sortBy,sortValue,searchBy) {
           deferred.reject(err);
         }
         if (!data.length){
-          var error = {
+          var error = [{
+            status : '404',
             message:'No Record Found'
-          }
+          }]
           deferred.reject(error);
         }
         deferred.resolve(data);

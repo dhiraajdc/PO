@@ -37,9 +37,9 @@ exports.deleteDemandOrder = function(doNumber) {
           });
         }
         else{
-          var error = {
+          var error = [{
             message:'No Record Found'
-          }
+          }]
           console.log(error)
           deferred.reject(error);
         }
@@ -47,9 +47,9 @@ exports.deleteDemandOrder = function(doNumber) {
       });
     }
     else{
-      var error = {
+      var error = [{
         message:'DO number is invalid'
-      }
+      }]
       deferred.reject(error);
     }
     return deferred.promise;
@@ -113,7 +113,7 @@ exports.createDemandOrder = function(body) {
 exports.getDemandOrder = function(doNumber,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
-  if(doNumber && doNumber.length){
+  if(doNumber){
     condition["doNumber"] = doNumber;
   }
   if(searchBy){
@@ -131,9 +131,9 @@ exports.getDemandOrder = function(doNumber,sortBy,sortValue,searchBy) {
           deferred.reject(err);
         }
         if (!data.length){
-          var error = {
+          var error = [{
             message:'Record not found'
-          }
+          }]
           deferred.resolve(error);
         }
         deferred.resolve(data);

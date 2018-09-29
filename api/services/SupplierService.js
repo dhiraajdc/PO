@@ -34,9 +34,10 @@ exports.getSuppliers = function(supplierID,sortBy,sortValue,searchBy) {
           deferred.reject(err);
         }
         if (!data.length){
-          var error = {
-            message:'No record found'
-          }
+          var error = [{
+            status : '404',
+            message:'No Record Found'
+          }]
           deferred.reject(error);
         }
         deferred.resolve(data);
@@ -106,9 +107,10 @@ exports.deleteSuppliers = function(supplierID) {
         });
       }
       else{
-        var error = {
+        var error = [{
+          status : '404',
           message:'No Record Found'
-        }
+        }]
         console.log(error)
         deferred.reject(error);
       }

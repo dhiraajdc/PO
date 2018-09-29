@@ -55,9 +55,9 @@ function getSuppliers (req, res, next) {
     }else if (value === "desc"){
       var sortValue = -1;
     }else{
-      var error = {
+      var error = [{
         message:'Bad request'
-      }
+      }]
       res.json(error);
     }
   }

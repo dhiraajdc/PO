@@ -11,14 +11,6 @@ var express = require('express');
 var router = express.Router();
 
 
-// router.get('/', getAllPurchaseOrder);
-// router.get('/search/:searchBy', searchPurchaseOrder);
-// router.get('/:manufacturerName/:sortBy', getPurchaseOrder);
-// router.delete('/:poNumber', deletePurchaseOrder);
-// router.post('/', createPurchaseOrder);
-// router.put('/', updatePurchaseOrder);
-// router.patch('/', updateSinglePurchaseOrder);
-// module.exports = router;
 module.exports = {
   getPurchaseOrder: getPurchaseOrder,
   createPurchaseOrder: createPurchaseOrder,
@@ -47,9 +39,9 @@ function getPurchaseOrder (req, res, next) {
     }else if (value === "desc"){
       var sortValue = -1;
     }else{
-      var error = {
+      var error = [{
         message:'Bad request'
-      }
+      }]
       res.json(error);
     }
   }

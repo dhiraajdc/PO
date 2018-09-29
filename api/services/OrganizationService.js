@@ -16,7 +16,7 @@ var Q = require ('q');
 exports.getOrganization = function(orgId,sortBy,sortValue,searchBy) {
   var deferred = Q.defer();
   var condition = {};
-  if(orgId && orgId.length){
+  if(orgId){
     condition["orgId"] = orgId;
   }
   if(searchBy){
@@ -37,11 +37,11 @@ exports.getOrganization = function(orgId,sortBy,sortValue,searchBy) {
         if (data.length){
         }
         else{
-          var error = {
+          var error = [{
+            status : '404',
             message:'No Record Found'
-          }
+          }]
           console.log(error)
-          res.status(404).send('No good!');
           deferred.reject(error);
         }
         deferred.resolve(data);
@@ -82,18 +82,19 @@ exports.deleteOrganization = function(organizationId) {
           });
         }
         else{
-          var error = {
+          var error = [{
+            status : '404',
             message:'No Record Found'
-          }
+          }]
           deferred.reject(error);
         }
         
       });
     }
     else{
-      var error = {
+      var error = [{
         message:'Organization ID is invalid'
-      }
+      }]
       deferred.reject(error);
     }
     return deferred.promise;
