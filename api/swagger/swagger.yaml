@@ -8,13 +8,13 @@ host: localhost:10010
 basePath: /
 tags:
   - name: Purchase Order
-    description: Everything about Purchase Order
+    description: Operations to add, delete and update Purchase Order
   - name: Demand Order
-    description: Everything about Demand Order
+    description: Operations to add, delete and update Demand Order
   - name: Organizations
-    description: Everything about Organization
+    description: Operations to add, delete and update Organization
   - name: Suppliers
-    description: Everything about Suppliers
+    description: Operations to add, delete and update Suppliers
 # 
 schemes:
   # tip: remove http to make production-grade
@@ -58,16 +58,49 @@ paths:
           required: false
           type: integer
       responses:
-        "200":
+        200:
           description: Success
           schema:
             type: array
             items:
               # a pointer to a definition
               $ref: "#/definitions/PurchaseOrder"
-        # responses may fall through to errors
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     delete:
@@ -83,20 +116,52 @@ paths:
           in: query
           required: true
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        # responses may fall through to errors
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
       tags:
         - Purchase Order
       description: add a new purchase order detail
-      # movie info to be stored
       operationId: createPurchaseOrder
       parameters:
         - in: body
@@ -104,24 +169,55 @@ paths:
           description: order placed for purchasing the product
           required: true
           schema:
-            type: array
-            items:
               # a pointer to a definition
               $ref: "#/definitions/PurchaseOrder"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     put:
       tags:
         - Purchase Order
-      description: update purchase order details
-      # movie info to be stored
+      description: Update Purchase order details
       operationId: updatePurchaseOrder
       parameters:
         - in: body
@@ -131,12 +227,101 @@ paths:
           schema:
             $ref: "#/definitions/UpdatePurchaseOrder"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      tags:
+      - Purchase Order
+      description: "Update single entity of Purchase Order"
+      operationId: "updateSinglePurchaseOrder"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Update single entry"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdatePurchaseOrder"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
   /demandorder:
@@ -169,16 +354,49 @@ paths:
           required: false
           type: integer
       responses:
-        "200":
+        200:
           description: Success
           schema:
             type: array
             items:
               # a pointer to a definition
               $ref: "#/definitions/DemandOrder"
-        # responses may fall through to errors
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     delete:
@@ -194,20 +412,52 @@ paths:
           in: query
           required: true
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        # responses may fall through to errors
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
       tags:
         - Demand Order
       description: add new demand order detail
-      # movie info to be stored
       operationId: createDemandOrder
       parameters:
         - in: body
@@ -215,24 +465,55 @@ paths:
           description: Demand Order details
           required: true
           schema:
-            type: array
-            items:
               # a pointer to a definition
               $ref: "#/definitions/DemandOrder"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     put:
       tags:
         - Demand Order
       description: update demand order details
-      # movie info to be stored
       operationId: updateDemandOrder
       parameters:
         - in: body
@@ -242,12 +523,101 @@ paths:
           schema:
             $ref: "#/definitions/UpdateDemandOrder"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      tags:
+        - Demand Order
+      description: update single entity of Demand Order
+      operationId: updateSingleDemandOrder
+      parameters:
+        - in: body
+          name: body
+          description: update demand order details
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateDemandOrder"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
   /org:
@@ -280,16 +650,49 @@ paths:
           required: false
           type: integer
       responses:
-        "200":
+        200:
           description: Success
           schema:
             type: array
             items:
               # a pointer to a definition
               $ref: "#/definitions/organization"
-        # responses may fall through to errors
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     delete:
@@ -305,20 +708,52 @@ paths:
           required: true
           type: integer
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        # responses may fall through to errors
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
       tags:
         - Organizations
       description: add new Organization details
-      # movie info to be stored
       operationId: createOrganization
       parameters:
         - in: body
@@ -326,24 +761,55 @@ paths:
           description: Organization details
           required: true
           schema:
-            type: array
-            items:
               # a pointer to a definition
               $ref: "#/definitions/organization"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     put:
       tags:
         - Organizations
       description: update Organization details
-      # movie info to be stored
       operationId: updateOrganization
       parameters:
         - in: body
@@ -353,12 +819,101 @@ paths:
           schema:
             $ref: "#/definitions/UpdateOrganization"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        default:
-          description: Error
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      tags:
+        - Organizations
+      description: update Organization details
+      operationId: updateSingleOrganization
+      parameters:
+        - in: body
+          name: body
+          description: update demand order details
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateOrganization"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        201:
+          description: "Created"
+        304:
+          description: "Not Modified"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        417:
+          description: "Expectation Failed"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        503:
+          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
   /supplier:
@@ -391,7 +946,7 @@ paths:
           required: false
           type: integer
       responses:
-        "200":
+        200:
           description: Success
           schema:
             type: array
@@ -416,7 +971,7 @@ paths:
           in: query
           required: true
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
@@ -429,7 +984,6 @@ paths:
       tags:
         - Suppliers
       description: add new Supplier details
-      # movie info to be stored
       operationId: createSuppliers
       parameters:
         - in: body
@@ -437,12 +991,10 @@ paths:
           description: Organization details
           required: true
           schema:
-            type: array
-            items:
               # a pointer to a definition
               $ref: "#/definitions/supplier"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
@@ -454,7 +1006,6 @@ paths:
       tags:
         - Suppliers
       description: update Supplier details
-      # movie info to be stored
       operationId: updateSuppliers
       parameters:
         - in: body
@@ -464,7 +1015,7 @@ paths:
           schema:
             $ref: "#/definitions/UpdateSupplier"
       responses:
-        "200":
+        200:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'

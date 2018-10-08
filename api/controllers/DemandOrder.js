@@ -6,20 +6,12 @@ var express = require('express');
 var router = express.Router();
 
 
-// router.get('/', getAllDemandOrder);
-// router.get('/search/:searchBy', searchDemandOrder);
-// router.get('/:manufacturerName/:sortBy', getDemandOrder);
-// router.delete('/:doNumber', deleteDemandOrder);
-// router.post('/', createDemandOrder);
-// router.put('/', updateDemandOrder);
-// router.patch('/', updateSingleDemandOrder);
-// module.exports = router;
-
 module.exports ={
   getDemandOrder: getDemandOrder,
   createDemandOrder: createDemandOrder,
   updateDemandOrder: updateDemandOrder,
-  deleteDemandOrder: deleteDemandOrder
+  deleteDemandOrder: deleteDemandOrder,
+  updateSingleDemandOrder: updateSingleDemandOrder 
 }
 
 /** 
@@ -35,7 +27,9 @@ function deleteDemandOrder (req, res, next) {
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -52,7 +46,9 @@ function createDemandOrder (req, res, next) {
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -74,39 +70,25 @@ function getDemandOrder (req, res, next) {
     }else if (value === "desc"){
       var sortValue = -1;
     }else{
-      var error = [{
-        message:'Bad request'
-      }]
+      var error = {
+				statusCode: 400,
+				message: 'Bad request'
+			}
       res.json(error);
     }
   }
   DemandOrder.getDemandOrder(doNumber,sortBy,sortValue,searchBy)
     .then(function (response) {
-      console.log(response);
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
-/** 
-* @author:Gokul
-* @argument:manufacturerName
-* @description:get Demand order
-*/
 
-// function getDemandOrder (req, res, next) {
-//   // var manufacturerName = req.params.manufacturerName;
-//   // var sortBy = req.params.sortBy;
-//   DemandOrder.getDemandOrder(manufacturerName,sortBy)
-//     .then(function (response) {
-//       res.json(response);
-//     })
-//     .catch(function (response) {
-//       res.json(response);
-//     });
-// };
 
 /** 
 * @author:Gokul
@@ -121,7 +103,9 @@ function updateDemandOrder (req, res, next) {
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -132,20 +116,8 @@ function updateSingleDemandOrder(req, res, next){
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
-    });
-}
-
-function searchDemandOrder(req, res, next){
-  // var orgID = req.params.orgID;
-  var searchBy = req.params.searchBy;
-  DemandOrder.searchDemandOrder(searchBy)
-    .then(function (response) {
-      res.json(response);
-      console.log(response);
-    })
-    .catch(function (response) {
-      res.json(response);
-      console.log(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 }

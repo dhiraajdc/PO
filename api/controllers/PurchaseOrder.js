@@ -15,7 +15,8 @@ module.exports = {
   getPurchaseOrder: getPurchaseOrder,
   createPurchaseOrder: createPurchaseOrder,
   updatePurchaseOrder: updatePurchaseOrder,
-  deletePurchaseOrder: deletePurchaseOrder
+  deletePurchaseOrder: deletePurchaseOrder,
+  updateSinglePurchaseOrder: updateSinglePurchaseOrder
 };
 
 
@@ -39,9 +40,10 @@ function getPurchaseOrder (req, res, next) {
     }else if (value === "desc"){
       var sortValue = -1;
     }else{
-      var error = [{
-        message:'Bad request'
-      }]
+      var error = {
+				statusCode: 400,
+				message: 'Bad request'
+			}
       res.json(error);
     }
   }
@@ -52,7 +54,9 @@ function getPurchaseOrder (req, res, next) {
     })
     .catch(function (response) {
       // console.log(response);
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg }); 
     });
 };
 
@@ -68,11 +72,12 @@ function deletePurchaseOrder (req, res, next) {
   var poNumber = req.swagger.params.poNumber.value;
   PurchaseOrder.deletePurchaseOrder(poNumber)
     .then(function (response) {
-      console.log(response);
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -92,8 +97,9 @@ function createPurchaseOrder (req, res) {
     })
     .catch(function (response) {
       // console.log(response);
-      res.json(response);
-      // console.log(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -110,45 +116,22 @@ function updatePurchaseOrder (req, res, next) {
       res.json(response);
     })
     .catch(function (response) {
-      res.json(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
-
-/** 
-* @author:Gokul
-* @argument:body
-* @description:update Purchase order
-*/
-function updateSinglePurchaseOrder (req, res, next) {
+function updateSinglePurchaseOrder(req, res, next) {
   var body = req.body;
   PurchaseOrder.updatePurchaseOrder(body)
     .then(function (response) {
-      utils.writeJson(res, response);
-      console.log(response);
+      res.json(response);
     })
     .catch(function (response) {
-      utils.writeJson(res, response);
       console.log(response);
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
-
-/** 
-* @author:Gokul
-* @argument:orgID,poNumber
-* @description:search for poNumber for corresponding orgID
-*/
-
-function searchPurchaseOrder(req, res, next){
-  // var orgID = req.params.orgID;
-  var searchBy = req.params.searchBy;
-  PurchaseOrder.searchPurchaseOrder(searchBy)
-    .then(function (response) {
-      utils.writeJson(res, response);
-      console.log(response);
-    })
-    .catch(function (response) {
-      utils.writeJson(res, response);
-      console.log(response);
-    });
-}

@@ -5,17 +5,12 @@ var Organization = require('../services/OrganizationService');
 var express = require('express');
 var router = express.Router();
 
-// router.get('/', getAllOrganization);
-// router.get('/:organizationId/:sortBy', getOrganization);
-// router.delete('/:organizationId', deleteOrganization);
-// router.post('/', createOrganization);
-// router.put('/', updateOrganization);
-// router.patch('/', updateSingleOrganization);
 module.exports = {
   getOrganization: getOrganization,
   createOrganization: createOrganization,
   updateOrganization: updateOrganization,
-  deleteOrganization: deleteOrganization
+  deleteOrganization: deleteOrganization,
+  updateSingleOrganization: updateSingleOrganization
 }
 
 /** 
@@ -37,9 +32,10 @@ function getOrganization (req, res, next) {
     }else if (value === "desc"){
       var sortValue = -1;
     }else{
-      var error = [{
-        message:'Bad request'
-      }]
+      var error = {
+				statusCode: 400,
+				message: 'Bad request'
+			}
       res.json(error);
     }
   }
@@ -50,7 +46,9 @@ function getOrganization (req, res, next) {
     })
     .catch(function (response) {
       // console.log(response);
-      res.json(response)
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -61,20 +59,22 @@ function deleteOrganization (req, res, next) {
       res.json(response)
     })
     .catch(function (response) {
-      console.log("err======>",response);
-      res.json(response)
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
 function createOrganization (req, res, next) {
   var body = req.body;
-  
   Organization.createOrganization(body)
     .then(function (response) {
       res.json(response)
     })
     .catch(function (response) {
-      res.json(response)
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -85,7 +85,9 @@ function updateOrganization (req, res, next) {
       res.json(response)
     })
     .catch(function (response) {
-      res.json(response)
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 };
 
@@ -96,6 +98,8 @@ function updateSingleOrganization(req, res, next){
       res.json(response)
     })
     .catch(function (response) {
-      res.json(response)
+      var statusCode = response.statusCode;
+      var msg = response.message;
+      res.status(statusCode).send({ message: msg });
     });
 }
