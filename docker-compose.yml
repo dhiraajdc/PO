@@ -1,0 +1,19 @@
+version: "2"
+services:
+  app:
+    container_name: po
+    image: mamtabhardwaj12/po
+    restart: always
+    build: .
+    ports:
+      - "10010:10010"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+
