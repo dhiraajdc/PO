@@ -9,12 +9,6 @@ basePath: /
 tags:
   - name: Purchase Order
     description: Operations to add, delete and update Purchase Order
-  - name: Demand Order
-    description: Operations to add, delete and update Demand Order
-  - name: Organizations
-    description: Operations to add, delete and update Organization
-  - name: Suppliers
-    description: Operations to add, delete and update Suppliers
 # 
 schemes:
   # tip: remove http to make production-grade
@@ -65,42 +59,12 @@ paths:
             items:
               # a pointer to a definition
               $ref: "#/definitions/PurchaseOrder"
-        201:
-          description: "Created"
-        304:
-          description: "Not Modified"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
         400:
           description: "Bad Request"
           schema:
             $ref: "#/definitions/ErrorResponse"
-        401:
-          description: "Unauthorized"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        403:
-          description: "Forbidden"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
         404:
           description: "Not Found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        409:
-          description: "Conflict"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        417:
-          description: "Expectation Failed"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        503:
-          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     delete:
@@ -116,46 +80,12 @@ paths:
           in: query
           required: true
       responses:
-        200:
-          description: Success
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        201:
-          description: "Created"
-        304:
-          description: "Not Modified"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
         400:
           description: "Bad Request"
           schema:
             $ref: "#/definitions/ErrorResponse"
-        401:
-          description: "Unauthorized"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        403:
-          description: "Forbidden"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
         404:
           description: "Not Found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        409:
-          description: "Conflict"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        417:
-          description: "Expectation Failed"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        503:
-          description: "Service Unavailable"
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
@@ -173,45 +103,11 @@ paths:
               $ref: "#/definitions/PurchaseOrder"
       responses:
         200:
-          description: Success
+          description: "successful operation"
           schema:
-            $ref: '#/definitions/ApiResponse'
-        201:
-          description: "Created"
-        304:
-          description: "Not Modified"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        400:
-          description: "Bad Request"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        401:
-          description: "Unauthorized"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        403:
-          description: "Forbidden"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        404:
-          description: "Not Found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        409:
-          description: "Conflict"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        417:
-          description: "Expectation Failed"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        503:
-          description: "Service Unavailable"
+            $ref: "#/definitions/ApiResponse"
+        405:
+          description: "Invalid input"
           schema:
             $ref: "#/definitions/ErrorResponse"
     put:
@@ -231,42 +127,16 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        201:
-          description: "Created"
-        304:
-          description: "Not Modified"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
         400:
           description: "Bad Request"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        401:
-          description: "Unauthorized"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        403:
-          description: "Forbidden"
           schema:
             $ref: "#/definitions/ErrorResponse"
         404:
           description: "Not Found"
           schema:
             $ref: "#/definitions/ErrorResponse"
-        409:
-          description: "Conflict"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        417:
-          description: "Expectation Failed"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        503:
-          description: "Service Unavailable"
+        405:
+          description: "Validation exception"
           schema:
             $ref: "#/definitions/ErrorResponse"
     patch:
@@ -286,42 +156,16 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/ApiResponse'
-        201:
-          description: "Created"
-        304:
-          description: "Not Modified"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
         400:
           description: "Bad Request"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        401:
-          description: "Unauthorized"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        403:
-          description: "Forbidden"
           schema:
             $ref: "#/definitions/ErrorResponse"
         404:
           description: "Not Found"
           schema:
             $ref: "#/definitions/ErrorResponse"
-        409:
-          description: "Conflict"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        417:
-          description: "Expectation Failed"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        500:
-          description: "Internal Server Error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        503:
-          description: "Service Unavailable"
+        405:
+          description: "Validation exception"
           schema:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
@@ -347,6 +191,25 @@ definitions:
         format: "int64"
     xml:
       name: "poCondition"
+  ProductDetails:
+    type: object
+    properties:
+      product:
+        type: string
+      description:
+        type: string
+      unit:
+        type: string
+      qty:
+        type: integer
+      unitPrice:
+        type: integer
+      totalPrice:
+        type: integer
+      taxCode:
+        type: string
+    xml:
+      name: "ProductDetails"
   PurchaseOrder:
     type: object
     properties:
@@ -373,20 +236,10 @@ definitions:
         description: Organisation ID
       billingAddrs:
         type: string
-      product:
-        type: string
-      description:
-        type: string
-      unit:
-        type: string
-      qty:
-        type: integer
-      unitPrice:
-        type: integer
-      totalPrice:
-        type: integer
-      taxCode:
-        type: string
+      ProductDetails:
+        type: array
+        items: 
+          $ref: "#/definitions/ProductDetails"
       grndTotal:
         type: integer
       advPaymnt:
