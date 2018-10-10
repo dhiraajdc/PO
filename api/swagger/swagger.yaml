@@ -110,6 +110,10 @@ paths:
           description: "Invalid input"
           schema:
             $ref: "#/definitions/ErrorResponse"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     put:
       tags:
         - Purchase Order
