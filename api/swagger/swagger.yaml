@@ -38,12 +38,12 @@ paths:
           required: false
         - name: sortBy
           in: query
-          description: sort by query
+          description: sort by field name For e.g. poNumber_desc or poNumber_asc
           required: false
           type: string
         - name: searchBy
           in: query
-          description: search by query
+          description: search by Purchase Order Number
           required: false
           type: string
         - name: page
@@ -58,7 +58,7 @@ paths:
             type: array
             items:
               # a pointer to a definition
-              $ref: "#/definitions/PurchaseOrder"
+              $ref: "#/definitions/purchaseOrder"
         400:
           description: "Bad Request"
           schema:
@@ -100,7 +100,7 @@ paths:
           required: true
           schema:
               # a pointer to a definition
-              $ref: "#/definitions/PurchaseOrder"
+              $ref: "#/definitions/purchaseOrder"
       responses:
         200:
           description: "successful operation"
@@ -120,12 +120,17 @@ paths:
       description: Update Purchase order details
       operationId: updatePurchaseOrder
       parameters:
+        - name: poNumber
+          in: query
+          description: ""
+          required: true
+          type: string
         - in: body
           name: body
           description: update purchase order details
           required: true
           schema:
-            $ref: "#/definitions/UpdatePurchaseOrder"
+            $ref: "#/definitions/purchaseOrder"
       responses:
         200:
           description: Success
@@ -149,12 +154,16 @@ paths:
       description: "Update single entity of Purchase Order"
       operationId: "updateSinglePurchaseOrder"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Update single entry"
-        required: true
-        schema:
-          $ref: "#/definitions/UpdatePurchaseOrder"
+        - name: poNumber
+          in: query
+          description: ""
+          required: true
+          type: integer
+        - name: status
+          in: query
+          description: "For eg; status = approved/rejected"
+          required: true
+          type: string
       responses:
         200:
           description: Success
@@ -176,26 +185,7 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  UpdatePurchaseOrder:
-    type: object
-    properties:
-      condition:
-        $ref: "#/definitions/poCondition"
-      update:
-        $ref: "#/definitions/PurchaseOrder"
-    xml:
-      name: "UpdatePurchaseOrder"
-  poCondition:
-    type: "object"
-    required:
-    - "poNumber"
-    properties:
-      poNumber:
-        type: "integer"
-        format: "int64"
-    xml:
-      name: "poCondition"
-  ProductDetails:
+  product:
     type: object
     properties:
       product:
@@ -213,8 +203,8 @@ definitions:
       taxCode:
         type: string
     xml:
-      name: "ProductDetails"
-  PurchaseOrder:
+      name: "product"
+  purchaseOrder:
     type: object
     properties:
       manufacturerName:
@@ -240,10 +230,10 @@ definitions:
         description: Organisation ID
       billingAddrs:
         type: string
-      ProductDetails:
+      product:
         type: array
         items: 
-          $ref: "#/definitions/ProductDetails"
+          $ref: "#/definitions/product"
       grndTotal:
         type: integer
       advPaymnt:
@@ -282,7 +272,7 @@ definitions:
       billingAddrs: billingAddrs
       status: approved
     xml:
-      name: PurchaseOrder
+      name: purchaseOrder
   ApiResponse:
     type: object
     properties:

@@ -111,7 +111,8 @@ function createPurchaseOrder (req, res) {
 */
 function updatePurchaseOrder (req, res, next) {
   var body = req.body;
-  PurchaseOrder.updatePurchaseOrder(body)
+  var poNumber = req.swagger.params.poNumber.value;
+  PurchaseOrder.updatePurchaseOrder(poNumber,body)
     .then(function (response) {
       res.json(response);
     })
@@ -123,8 +124,9 @@ function updatePurchaseOrder (req, res, next) {
 };
 
 function updateSinglePurchaseOrder(req, res, next) {
-  var body = req.body;
-  PurchaseOrder.updatePurchaseOrder(body)
+  var status = req.swagger.params.status.value;
+  var poNumber = req.swagger.params.poNumber.value;
+  PurchaseOrder.updatePurchaseOrder(poNumber,status)
     .then(function (response) {
       res.json(response);
     })

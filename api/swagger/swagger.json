@@ -49,7 +49,7 @@
 					{
 						"name": "searchBy",
 						"in": "query",
-						"description": "search by query",
+						"description": "search by Purchase Order Number",
 						"required": false,
 						"type": "string"
 					},
@@ -67,7 +67,7 @@
 						"schema": {
 							"type": "array",
 							"items": {
-								"$ref": "#/definitions/PurchaseOrder"
+								"$ref": "#/definitions/purchaseOrder"
 							}
 						}
 					},
@@ -128,7 +128,7 @@
 						"description": "order placed for purchasing the product",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/PurchaseOrder"
+							"$ref": "#/definitions/purchaseOrder"
 						}
 					}
 				],
@@ -161,12 +161,19 @@
 				"operationId": "updatePurchaseOrder",
 				"parameters": [
 					{
+						"name": "poNumber",
+						"in": "query",
+						"description": "",
+						"required": true,
+						"type": "string"
+					},
+					{
 						"in": "body",
 						"name": "body",
 						"description": "update purchase order details",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/UpdatePurchaseOrder"
+							"$ref": "#/definitions/purchaseOrder"
 						}
 					}
 				],
@@ -205,12 +212,19 @@
 				"operationId": "updateSinglePurchaseOrder",
 				"parameters": [
 					{
+						"name": "poNumber",
+						"in": "query",
+						"description": "",
+						"required": true,
+						"type": "string"
+					},
+					{
 						"in": "body",
 						"name": "body",
-						"description": "Update single entry",
+						"description": "update purchase order details",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/UpdatePurchaseOrder"
+							"$ref": "#/definitions/purchaseOrder"
 						}
 					}
 				],
@@ -254,7 +268,7 @@
 					"$ref": "#/definitions/poCondition"
 				},
 				"update": {
-					"$ref": "#/definitions/PurchaseOrder"
+					"$ref": "#/definitions/purchaseOrder"
 				}
 			},
 			"xml": {
@@ -276,7 +290,7 @@
 				"name": "poCondition"
 			}
 		},
-		"ProductDetails": {
+		"product": {
 			"type": "object",
 			"properties": {
 				"product": {
@@ -302,10 +316,10 @@
 				}
 			},
 			"xml": {
-				"name": "ProductDetails"
+				"name": "product"
 			}
 		},
-		"PurchaseOrder": {
+		"purchaseOrder": {
 			"type": "object",
 			"properties": {
 				"manufacturerName": {
@@ -340,10 +354,10 @@
 				"billingAddrs": {
 					"type": "string"
 				},
-				"ProductDetails": {
+				"product": {
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/ProductDetails"
+						"$ref": "#/definitions/product"
 					}
 				},
 				"grndTotal": {
@@ -391,7 +405,7 @@
 				"status": "approved"
 			},
 			"xml": {
-				"name": "PurchaseOrder"
+				"name": "purchaseOrder"
 			}
 		},
 		"ApiResponse": {

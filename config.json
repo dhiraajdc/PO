@@ -1,4 +1,4 @@
 {
-    "dbConnection" : "mongodb://mongo:27017/",
+    "dbConnection" : "mongodb://127.0.0.1:27017/",
     "dbName" : "SCF"
 }

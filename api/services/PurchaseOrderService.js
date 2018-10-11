@@ -76,11 +76,14 @@ exports.deletePurchaseOrder = function(poNumber) {
  * body PurchaseOrder Update purchase order data
  * no response value expected for this operation
  **/
-exports.updatePurchaseOrder = function(body) {
-  var condition = body.condition;
-  var data = body.update;
+exports.updatePurchaseOrder = function(poNumber,status) {
+  var condition = {};
+  condition["poNumber"] = poNumber;
+  var body = {};
+  body["status"] = status;
+  // var data = body.update;
   var paramNotReq = {_id:0};
-   return crud.updateData(db.dbConnection, db.dbName, collectionName, data, condition, paramNotReq)
+   return crud.updateData(db.dbConnection, db.dbName, collectionName, body, condition, paramNotReq)
 }
 
 
